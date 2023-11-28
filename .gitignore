@@ -2,3 +2,5 @@ build
 node_modules
 **.husky
 **commitlint.config.js
+**eslintrc.js
+**.prettierrc.js
