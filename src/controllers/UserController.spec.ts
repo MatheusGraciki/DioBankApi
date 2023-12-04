@@ -6,7 +6,9 @@ import { makeMockResponse } from '../__mocks__/mockResponse.mock';
 describe('UserController', () => {
     const mockUserService: Partial<UserService> = {
         createUser: jest.fn(),
+        getAllUsers: jest.fn(),
     };
+    
     const userController = new UserController(mockUserService as UserService);
 
     it('should add a new user', () => {
@@ -16,8 +18,10 @@ describe('UserController', () => {
                 email: 'test@example.com',
             },
         } as Request;
+
         const mockResponse = makeMockResponse();
         userController.createUser(mockRequest, mockResponse);
+        
         expect(mockResponse.state.status).toBe(201);
         expect(mockResponse.state.json).toMatchObject({ message: 'Account created' });
     });
@@ -28,9 +32,24 @@ describe('UserController', () => {
                 email: 'test@example.com',
             },
         } as Request;
+
         const mockResponse = makeMockResponse();
         userController.createUser(mockRequest, mockResponse);
+        
         expect(mockResponse.state.status).toBe(400);
         expect(mockResponse.state.json).toMatchObject({ message: 'Bad request! Nome obrigatório' });
+    });
+
+    it('should return all the users', () => {
+        const mockRequest = {} as Request;
+        const mockResponse = makeMockResponse();
+        userController.getAllUsers(mockRequest, mockResponse);
+        
+        expect(mockUserService.getAllUsers).toHaveBeenCalled();
+        expect(mockResponse.state.status).toBe(201);
+
+        const jsonResponse = mockResponse.state.json as { users: any[] };
+        expect(jsonResponse).toHaveProperty('users');
+        expect(Array.isArray(jsonResponse.users)).toBe(true);
     });
 });
