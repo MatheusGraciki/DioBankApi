@@ -23,6 +23,6 @@ export class UserController {
 
     getAllUsers = (req: Request, res: Response) => {
         const users = this.userService.getAllUsers();
-        return res.status(201).json({ users });
+        return res.status(200).json({ users });
     };
 }
