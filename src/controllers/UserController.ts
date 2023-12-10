@@ -4,11 +4,11 @@ import { Request, Response } from 'express';
 export class UserController {
     userService: UserService;
 
-    constructor(userService: UserService){
-        this.userService = new UserService;
+    constructor(userService?: UserService) {
+        this.userService = userService || new UserService();
     }
+
     createUser = (req: Request, res: Response) => {
-        const userService = new UserService();
         const user = req.body;
 
         if (!user.name) {
