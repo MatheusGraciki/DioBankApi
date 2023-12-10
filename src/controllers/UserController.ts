@@ -13,6 +13,8 @@ export class UserController {
 
         if (!user.name) {
             return res.status(400).json({ message: 'Bad request! Nome obrigatório' });
+        } else if (!user.email) {
+            return res.status(400).json({ message: 'Bad request! Email obrigatório' });
         }
         this.userService.createUser(user.name, user.email);
 
