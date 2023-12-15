@@ -41,8 +41,11 @@ export class UserService {
 
         if (indexToDelete !== -1) {
             this.db.splice(indexToDelete, 1);
+            console.log(this.db);
             return true;
         }
+        
+        console.log(this.db);
 
         return false;
     };
