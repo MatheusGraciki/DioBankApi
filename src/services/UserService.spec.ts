@@ -5,9 +5,14 @@ describe('UserService', () => {
     const userService = new UserService(mockDb);
 
     it('should create a new user', () => {
-        const mockConsole = jest.spyOn(global.console, 'log');
+        const initialLength = userService.getAllUsers().length;
+
+        console.log('Database before creating user:', userService.getAllUsers());
         userService.createUser('testname', 'test@test.com');
-        expect(mockConsole).toHaveBeenCalledWith(mockDb);
+        console.log('Database after creating user:', userService.getAllUsers());
+
+        const updatedLength = userService.getAllUsers().length;
+        expect(updatedLength).toBe(initialLength + 1);
     });
 
     it('should delete a user', () => {
@@ -21,7 +26,6 @@ describe('UserService', () => {
         console.log('Database after deletion:', userService.getAllUsers());
 
         const usersAfterDeletion = userService.getAllUsers();
-
         expect(usersAfterDeletion).not.toContainEqual(userToDelete);
     });
 });
